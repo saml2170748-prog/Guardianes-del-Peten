@@ -1,0 +1,116 @@
+=== GUARDIANES DEL PETÉN - ENTREGA 3 ===
+
+A. REGISTRAR ANIMAL
+Animal registrado: JAG-001, Balam
+Animal registrado: TAP-001, Tziquin
+Animal registrado: GUA-001, Ixchel
+Animal registrado: COC-001, Chak
+Animal registrado: MON-001, Kuk
+RECHAZADO: art. 1: código animal inválido
+RECHAZADO: art. 1: código animal repetido
+RECHAZADO: art. 2: estado de conservación incorrecto
+
+B. ASIGNAR COLLAR
+Collar GPS-01 asignado a JAG-001
+Collar GPS-02 asignado a TAP-001
+RECHAZADO: collar o animal inexistente
+RECHAZADO: art. 4: collar ocupado por JAG-001
+RECHAZADO: art. 4: animal ya lleva GPS-01
+Collar GPS-03 asignado a GUA-001
+
+C. REPORTAR POSICIÓN
+Posición: JAG-001, Laguna del Tigre, 2026-10-11 18:30
+Posición: JAG-001, Uaxactún, 2026-10-11 18:30
+Alerta AL-001: acercamiento a comunidad, prioridad alta, pendiente
+SMS SIMULADO: AL-001 para GR-07
+Alerta AL-002: batería baja, prioridad media, pendiente
+RECHAZADO: art. 3: batería menor que 10%; lectura no guardada
+RECHAZADO: art. 5: zona no registrada
+RECHAZADO: collar inexistente
+RECHAZADO: art. 10: fecha u hora inválida
+
+D. REGISTRAR AVISTAMIENTO
+Avistamiento: COC-001 por GR-07
+Avistamiento: MON-001 por GR-08
+RECHAZADO: art. 7: código de guardarrecursos inválido
+RECHAZADO: animal o zona inexistente
+RECHAZADO: animal o zona inexistente
+
+E. ATENDER ALERTA
+Pendiente: AL-001, acercamiento a comunidad
+Pendiente: AL-002, batería baja
+Alerta AL-001 atendida por GR-07, 2026-10-11 19:00
+Pendiente: AL-002, batería baja
+RECHAZADO: art. 8: ya atendida por GR-07
+Pendiente: AL-002, batería baja
+RECHAZADO: alerta inexistente
+
+CASO ESCONDIDO: CAMBIAR BATERÍA
+Batería GPS-02: 100% por GR-07, 2026-10-11 19:30
+RECHAZADO: arts. 3 y 9: nuevo nivel fuera de 0 a 100
+RECHAZADO: art. 7: código de guardarrecursos inválido
+RECHAZADO: collar o guardarrecursos inexistente
+RECHAZADO: art. 10: fecha u hora inválida
+Posición: TAP-001, El Remate, 2026-10-11 19:35
+
+F. CONSULTAR MOVIMIENTOS
+Movimientos de JAG-001: 2
+    2026-10-11 18:30 | Laguna del Tigre | GPS
+    2026-10-11 18:30 | Uaxactún | GPS
+Movimientos de GUA-001: 0
+RECHAZADO: animal inexistente; sin resultados
+
+G. PRUEBAS ANTERIORES DE HERENCIA
+Heredado sin cambios: GPS-01
+Sobrescrito con super(): JAG-001 | Balam | jaguar | En peligro: True | territorio_km2: 40
+Propio: Rugido de jaguar: Balam
+Heredado sin cambios: GPS-02
+Sobrescrito con super(): TAP-001 | Tziquin | tapir | En peligro: True | peso_kg: 220
+Propio: El tapir nada en el río: Tziquin
+Heredado sin cambios: GPS-03
+Sobrescrito con super(): GUA-001 | Ixchel | guacamaya roja | En peligro: True | envergadura_cm: 100
+Propio: La guacamaya roja vuela: Ixchel
+Heredado sin cambios: Sin collar
+Sobrescrito con super(): COC-001 | Chak | cocodrilo de pantano | En peligro: False | longitud_m: 3
+Propio: El cocodrilo se sumerge: Chak
+Heredado sin cambios: Sin collar
+Sobrescrito con super(): MON-001 | Kuk | mono aullador | En peligro: False | altura_m: 1
+Propio: El mono aullador aúlla: Kuk
+
+RESUMEN FINAL
+Pendiente: AL-002, batería baja
+Zonas: 4 | Animales: 5 | Collares: 3
+Lecturas: 5 | Alertas: 2 | Cambios: 1
+SMS simulados: 1
+
+=== CICLO POLIMORFICO: CINCO ESPECIES ===
+Balam es un jaguar carnívoro; caza en la selva del Petén, se desplaza caminando y nadando y vigila 40 km² de territorio.
+Tziquin es un tapir herbívoro; come hojas y frutos, habita bosques húmedos y camina y nada; pesa 220 kg.
+Ixchel es una guacamaya roja; come semillas y frutos, vive en el dosel del bosque y vuela; su envergadura es 100 cm.
+Chak es un cocodrilo de pantano carnívoro; come peces, habita lagunas y humedales y se desplaza nadando y caminando; mide 3 m.
+Kuk es un mono aullador; come hojas y frutos, habita las copas de los árboles y se mueve trepando; mide 1 m de altura.
+
+=== INTENTO DE INSTANCIAR ANIMAL ABSTRACTA ===
+TypeError: Can't instantiate abstract class Animal without an implementation for abstract method 'describir'
+
+=== ENTREGA 5: RECURSIVIDAD ===
+
+=== ENTREGA 5: MAPA RECURSIVO ===
+Laguna del Tigre (núcleo) - 1 animal(es) directo(s)
+  Sector Norte (núcleo) - 1 animal(es) directo(s)
+    Aguada Escondida (núcleo) - 1 animal(es) directo(s)
+  Sector Sur (núcleo) - 1 animal(es) directo(s)
+    Aguada de la Ceiba (núcleo) - 0 animal(es) directo(s)
+Mirador-Río Azul (núcleo) - 1 animal(es) directo(s)
+  Sendero Verde (núcleo) - 0 animal(es) directo(s)
+
+=== CONTEO RECURSIVO ===
+Animales en toda la reserva: 5
+Animales dentro de Laguna del Tigre: 4
+
+=== BÚSQUEDA RECURSIVA ===
+Aguada Escondida: Aguada Escondida
+Laguna del Tigre: Laguna del Tigre
+Sector Fantasma: None
+
+Todas las pruebas de recursividad pasaron correctamente.
