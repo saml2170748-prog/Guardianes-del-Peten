@@ -1,89 +1,30 @@
-# Guardianes del Petén — Entrega 5: Recursividad
+Guardianes del Petén — Entrega 6: Colas y pilas
+Estudiante: Yancy Samantha Jimena Lopez Davila
+Carné: 202605658
+Grupo: 2
+Curso: Fundamentos de Programación 2 (IS24-FP2)
+Fecha: 22 de noviembre de 2026
+Descripción
+Mi proyecto simula el monitoreo de animales del Petén mediante collares GPS. Registro animales, zonas, avistamientos, lecturas, alertas y atención por guardarrecursos. Conservo las funciones anteriores de herencia, polimorfismo y recursividad, y agrego una cola de alertas y una bitácora de patrulla.
+Entrega 6: nuevas estructuras
+- ColaAlertas: implementa una cola FIFO mediante una lista privada _alertas con los métodos encolar, atender, siguiente, esta_vacia y tamano. La primera alerta recibida es la primera atendida.
+- BitacoraPatrulla: implementa una pila LIFO mediante una lista privada _entradas, con registrar, deshacer, ultima, esta_vacia y mostrar. La anotación más reciente se deshace primero.
+- SistemaMonitoreo: mantiene el historial original alertas y además envía las nuevas alertas a cola_alertas. atender_siguiente_alerta(codigo_guardarrecursos) atiende la siguiente alerta pendiente siguiendo el artículo 8 y registra la atención en bitacora. Si no quedan alertas, imprime No hay alertas por atender y devuelve None.
+Diagrama de clases
 
-**Estudiante:** Yancy Samantha Jimena Lopez Davila  
-**Carné:** 202605658  
-**Grupo:** 2  
-**Fecha:** 15 de noviembre de 2026  
-**Curso:** Fundamentos de Programación 2
-
-## Presentación
-
-En esta entrega amplié la estructura de las zonas para crear sectores y aguadas dentro de otras zonas. Utilicé recursividad para mostrar todo el mapa de la reserva, contar los animales y buscar un sector por su nombre, sin depender de un número fijo de niveles.
-
-## Funciones nuevas
-
-- `Zona.agregar_subzona(zona)` incorpora zonas del tipo permitido por R5.
-- `Zona.ubicar(animal)` agrega animales.
-- `Zona.mostrar(nivel=0)` imprime el árbol usando dos espacios por nivel.
-- `Zona.contar_animales()` suma animales propios y de todas las subzonas.
-- `Zona.buscar_sector(nombre)` devuelve la zona encontrada o `None`.
-- `SistemaMonitoreo.contar_animales()` y `SistemaMonitoreo.buscar_sector(nombre)` buscan entre zonas de primer nivel.
-
-## Diagrama de clases actualizado
-
-```mermaid
-classDiagram
-    class SistemaMonitoreo {
-      +list zonas
-      +list animales
-      +registrar_animal(...)
-      +registrar_zona(...)
-      +contar_animales()
-      +buscar_sector(nombre)
-    }
-    class Zona {
-      +str nombre
-      +str tipo
-      +list subzonas
-      +list animales
-      +agregar_subzona(zona)
-      +ubicar(animal)
-      +mostrar(nivel=0)
-      +contar_animales()
-      +buscar_sector(nombre)
-    }
-    class Animal {
-      <<abstract>>
-      +str codigo
-      +str nombre
-      +str especie
-      +bool en_peligro
-      +describir()
-    }
-    class Jaguar
-    class Tapir
-    class GuacamayaRoja
-    class CocodriloDePantano
-    class MonoAullador
-    SistemaMonitoreo "1" o-- "0..*" Zona
-    SistemaMonitoreo "1" o-- "0..*" Animal
-    Zona "1" o-- "0..*" Zona : subzonas (recursiva)
-    Zona "1" o-- "0..*" Animal : animales
-    Animal <|-- Jaguar
-    Animal <|-- Tapir
-    Animal <|-- GuacamayaRoja
-    Animal <|-- CocodriloDePantano
-    Animal <|-- MonoAullador
-```
-
-## Pruebas
-
-Ejecuté `main.py` con las pruebas antiguas recuperadas de mi material y con las pruebas nuevas. Se construyen **7 zonas**, con tres niveles debajo de la reserva, y se ubican **5 animales** en diferentes niveles. El conteo de toda la reserva es **5** y el de Laguna del Tigre es **4**. Se busca una aguada profunda, una zona de primer nivel y una inexistente; esta última devuelve `None`.
-
-## Ejecución en Windows
-
-Descomprimir todos los archivos en una misma carpeta. Abrir CMD en esa carpeta y ejecutar:
-
-```bat
+Las relaciones principales son: SistemaMonitoreo contiene una ColaAlertas y una BitacoraPatrulla; la cola almacena objetos Alerta, y el sistema conserva un historial de alertas independiente. Las especies heredan de Animal.
+Cómo ejecutar
+Abro una terminal dentro de la carpeta del proyecto y ejecuto:
 py main.py
-```
+Si utilizo otro sistema con Python instalado, puedo ejecutar python main.py.
 
-La salida comprobada está en `salida_ejecucion.txt`.
-
-## Nota sobre continuidad
-
-Esta carpeta fue reconstruida a partir del código de la Entrega 3 recuperado del documento anterior y de la ampliación recursiva de la Entrega 5. No se contó con los archivos `.py` exactos de la Entrega 4 mostrada en capturas. **Antes de entregar como continuidad definitiva de la Entrega 4, integrar las modificaciones de esta versión con el código original de la Entrega 4 (si incluye cambios adicionales).**
-
-## Publicación
-
-Crear un repositorio público de GitHub, subir todos los archivos `.py`, este `README.md`, el diagrama de clases y una captura real de `py main.py`; finalizar con un commit y copiar el enlace del repositorio en la tarea.
+Importante: el proyecto necesita todos los archivos .py de las entregas previas, incluido pruebas_entrega5.py, porque main.py lo importa. Este archivo debe estar en la misma carpeta del resto del proyecto.
+Pruebas de la Entrega 6
+En main.py ejecuto lo siguiente:
+1. Genero cuatro alertas y compruebo el tamaño de la cola y el código de la próxima alerta (AL-001).
+2. Atiendo dos alertas y compruebo que salen AL-001 y AL-002, en ese orden.
+3. Registro cuatro anotaciones nuevas en la bitácora; deshago la última y muestro las restantes desde la más reciente hasta la más antigua.
+4. Atiendo las dos alertas restantes, vuelvo a llamar al método cuando la cola está vacía y compruebo que devuelve None sin generar errores.
+También ejecuto las pruebas de las entregas anteriores.
+Evidencia
+Adjunto en este repositorio captura_entrega6.png, tomada al ejecutar py main.py, mostrando las pruebas de FIFO, LIFO y el mensaje de cola vacía.
