@@ -1,3 +1,67 @@
+from pruebas_entrega5 import ejecutar_pruebas_entrega5
+from animal import Animal
+from sistema_monitoreo import SistemaMonitoreo
+
+
+def probar_entrega6():
+    """Pruebas nuevas, separadas de los datos de las entregas anteriores."""
+    print("\n=== ENTREGA 6: COLAS Y PILAS ===")
+    s = SistemaMonitoreo()
+    s.registrar_guardarrecursos("GR-07", "Mateo Chayax")
+    s.establecer_turno("GR-07")
+    s.registrar_zona("Uaxactún", "uso múltiple")
+    s.registrar_zona("Laguna del Tigre", "núcleo")
+    s.registrar_collar("GPS-01", 80)
+    s.registrar_collar("GPS-02", 5)
+    s.registrar_animal("JAG-001", "Balam", "jaguar", True)
+    s.registrar_animal("TAP-001", "Tziquin", "tapir", True)
+    s.asignar_collar("GPS-01", "JAG-001")
+    s.asignar_collar("GPS-02", "TAP-001")
+
+    print("\n1. GENERAR CUATRO ALERTAS")
+    # Dos alertas por acercamiento a comunidad y dos por batería baja.
+    s.reportar_posicion("GPS-01", "Uaxactún", "2026-11-22 14:01")
+    s.reportar_posicion("GPS-02", "Laguna del Tigre", "2026-11-22 14:02")
+    s.reportar_posicion("GPS-01", "Uaxactún", "2026-11-22 14:03")
+    s.reportar_posicion("GPS-02", "Laguna del Tigre", "2026-11-22 14:04")
+    assert s.cola_alertas.tamano() == 4
+    assert s.cola_alertas.siguiente().codigo == "AL-001"
+    print("Cantidad en cola:", s.cola_alertas.tamano())
+    print("Siguiente:", s.cola_alertas.siguiente().codigo)
+
+    print("\n2. ATENDER DOS ALERTAS (FIFO)")
+    primera = s.atender_siguiente_alerta("GR-07")
+    segunda = s.atender_siguiente_alerta("GR-07")
+    assert primera is not None and primera.codigo == "AL-001"
+    assert segunda is not None and segunda.codigo == "AL-002"
+    print("Salieron:", primera.codigo, "y", segunda.codigo)
+    print("Quedan en cola:", s.cola_alertas.tamano())
+
+    print("\n3. CUATRO ANOTACIONES ADICIONALES (LIFO)")
+    entradas = [
+        "Revisé la aguada Los Patos",
+        "Verifiqué el sendero norte",
+        "Inspeccioné la caseta de Uaxactún",
+        "Conté las huellas cerca del río",
+    ]
+    for entrada in entradas:
+        s.bitacora.registrar(entrada)
+        print("Registrada:", entrada)
+    print("Última antes de deshacer:", s.bitacora.ultima())
+    deshecha = s.bitacora.deshacer()
+    assert deshecha == entradas[-1]
+    print("Anotación deshecha:", deshecha)
+    print("Bitácora completa, de reciente a antigua:")
+    s.bitacora.mostrar()
+
+    print("\n4. VACIAR COLA Y PROBAR UNA VEZ MÁS")
+    tercera = s.atender_siguiente_alerta("GR-07")
+    cuarta = s.atender_siguiente_alerta("GR-07")
+    assert tercera.codigo == "AL-003" and cuarta.codigo == "AL-004"
+    assert s.cola_alertas.esta_vacia()
+    assert s.atender_siguiente_alerta("GR-07") is None
+    assert len(s.alertas) == 4
+    print("Histórico de alertas:", len(s.alertas))
     print("TODAS LAS PRUEBAS DE LA ENTREGA 6 PASARON")
 
 
@@ -106,4 +170,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
